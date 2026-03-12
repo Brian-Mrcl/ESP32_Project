@@ -1,4 +1,4 @@
-# ESP32 — RFID Cloner · WiFi Sniffer · BLE Scanner
+# ESP32 - RFID Cloner · WiFi Sniffer · BLE Scanner
 
 Plateforme d'expérimentation embarquée sur **ESP32** combinant :
 - Lecture et clonage de badges **RFID MIFARE 1K** via module RC522
@@ -12,9 +12,9 @@ Plateforme d'expérimentation embarquée sur **ESP32** combinant :
 ## Table des matières
 
 - [Matériel requis](#matériel-requis)
-- [Projet 1 — RFID Cloner (RC522)](#projet-1--rfid-cloner-rc522)
-- [Projet 2 — WiFi Sniffer](#projet-2--wifi-sniffer)
-- [Projet 3 — BLE Scanner](#projet-3--ble-scanner)
+- [Projet 1 - RFID Cloner (RC522)](#projet-1--rfid-cloner-rc522)
+- [Projet 2 - WiFi Sniffer](#projet-2--wifi-sniffer)
+- [Projet 3 - BLE Scanner](#projet-3--ble-scanner)
 - [Installation et configuration](#installation-et-configuration)
 - [Structure du dépôt](#structure-du-dépôt)
 - [Dépendances](#dépendances)
@@ -38,16 +38,16 @@ Les projets WiFi Sniffer et BLE Scanner n'ont besoin que de l'**ESP32 seul** (pa
 
 ---
 
-## Projet 1 — RFID Cloner (RC522)
+## Projet 1 - RFID Cloner (RC522)
 
 ### Description
 
 Ce projet permet d'interagir avec des badges RFID MIFARE 1K en utilisant le module RC522. Il propose quatre fonctionnalités accessibles via un menu Serial :
 
-1. **Lecture UID** — Identifie et affiche le numéro unique (UID) d'une carte ainsi que son type
-2. **Dump complet** — Lit et affiche les 64 blocs (16 secteurs × 4 blocs) de la mémoire d'une carte MIFARE 1K en hexadécimal et ASCII
-3. **Clone UID** — Écrit un UID prédéfini dans le bloc 0 d'une carte Magic (carte à UID modifiable)
-4. **Vérification post-écriture** — Relit le bloc 0 après clonage pour confirmer la réussite
+1. **Lecture UID** - Identifie et affiche le numéro unique (UID) d'une carte ainsi que son type
+2. **Dump complet** - Lit et affiche les 64 blocs (16 secteurs × 4 blocs) de la mémoire d'une carte MIFARE 1K en hexadécimal et ASCII
+3. **Clone UID** - Écrit un UID prédéfini dans le bloc 0 d'une carte Magic (carte à UID modifiable)
+4. **Vérification post-écriture** - Relit le bloc 0 après clonage pour confirmer la réussite
 
 ### Câblage RC522 → ESP32
 
@@ -88,7 +88,7 @@ Secteur 1-15 (identique)
 
 ```
 Byte 0-3  : UID (4 bytes)
-Byte 4    : BCC — Byte de vérification = UID[0] XOR UID[1] XOR UID[2] XOR UID[3]
+Byte 4    : BCC - Byte de vérification = UID[0] XOR UID[1] XOR UID[2] XOR UID[3]
 Byte 5    : SAK
 Byte 6-7  : ATQA
 Byte 8-15 : Données fabricant
@@ -117,7 +117,7 @@ Remplacer par les bytes de l'UID souhaité (4 bytes pour MIFARE 1K standard).
 
 ### Cartes Magic / UID modifiables
 
-Les cartes MIFARE classiques ont leur **bloc 0 en lecture seule** — impossible d'y écrire. Les **cartes Magic** (aussi appelées "UID writable" ou "Gen1A") permettent l'écriture du bloc 0, ce qui rend possible le clonage d'UID.
+Les cartes MIFARE classiques ont leur **bloc 0 en lecture seule** - impossible d'y écrire. Les **cartes Magic** (aussi appelées "UID writable" ou "Gen1A") permettent l'écriture du bloc 0, ce qui rend possible le clonage d'UID.
 
 Il existe deux générations :
 - **Gen1A** : Répondent à une commande spéciale de déverrouillage avant l'écriture du bloc 0
@@ -127,7 +127,7 @@ Ce code cible les cartes **Gen1A** et **Gen2** avec clé A par défaut.
 
 ---
 
-## Projet 2 — WiFi Sniffer
+## Projet 2 - WiFi Sniffer
 
 ### Description
 
@@ -201,12 +201,12 @@ timestamp,type,src_mac,dst_mac,bssid,rssi,channel
 ### Notes techniques
 
 - L'ESP32 ne peut écouter qu'**un seul canal à la fois**. Le hop de canal simule un scan multi-canal mais peut manquer des trames sur un canal donné pendant le saut.
-- Les trames **Data sont encryptées** (WPA2/WPA3) — le sniffer peut les compter mais pas les déchiffrer.
+- Les trames **Data sont encryptées** (WPA2/WPA3) - le sniffer peut les compter mais pas les déchiffrer.
 - Les adresses MAC peuvent être **randomisées** par les appareils modernes (iOS, Android, Windows 10+), ce qui limite le tracking MAC.
 
 ---
 
-## Projet 3 — BLE Scanner
+## Projet 3 - BLE Scanner
 
 ### Description
 
@@ -242,7 +242,7 @@ Fonctionnalités :
 | `e` | Export CSV (prochain scan) |
 | `r` | Reset complet |
 
-### Exemple de sortie — Mode compact
+### Exemple de sortie - Mode compact
 
 ```
 [BLE] AA:BB:CC:DD:EE:FF  RSSI: -55dBm  iPhone         iBeacon              1.41m
@@ -250,7 +250,7 @@ Fonctionnalités :
 [BLE] 77:88:99:AA:BB:CC  RSSI: -48dBm  Mi Band 6      Unknown              0.79m
 ```
 
-### Exemple de sortie — Mode verbose
+### Exemple de sortie - Mode verbose
 
 ```
 ┌── Appareil BLE ──────────────────────────────┐
@@ -392,7 +392,7 @@ esp32-rfid-wifi-ble/
 
 Le protocole **MIFARE Classic 1K** utilise ISO/IEC 14443-A à 13.56 MHz. La mémoire est organisée en 16 secteurs de 4 blocs de 16 bytes. Chaque secteur est protégé par deux clés (A et B) définies dans le bloc Trailer. La communication utilise un chiffrement propriétaire CRYPTO-1.
 
-### 802.11 — Trames WiFi
+### 802.11 - Trames WiFi
 
 Les réseaux WiFi utilisent trois types de trames :
 - **Management** : gestion de la connexion (découverte réseau, authentification, association)
@@ -401,7 +401,7 @@ Les réseaux WiFi utilisent trois types de trames :
 
 En mode promiscuité, l'ESP32 reçoit toutes les trames sur le canal actif sans être associé.
 
-### BLE — Bluetooth Low Energy
+### BLE - Bluetooth Low Energy
 
 Le BLE utilise 40 canaux radio de 2 MHz entre 2.400 GHz et 2.4835 GHz. Les **Advertisement Packets** sont envoyés sur 3 canaux primaires dédiés (37, 38, 39). Les données d'advertisement contiennent des **AD Structures** qui encodent le nom, les services, et les données fabricant selon le format défini par le Bluetooth SIG.
 
@@ -417,16 +417,16 @@ Le BLE utilise 40 canaux radio de 2 MHz entre 2.400 GHz et 2.4835 GHz. Les **Adv
 
 ### WiFi Sniffer
 
-- L'ESP32 ne peut écouter qu'**un canal à la fois** — le hop de canal induit des pertes sur les autres canaux
+- L'ESP32 ne peut écouter qu'**un canal à la fois** - le hop de canal induit des pertes sur les autres canaux
 - Les trames Data sont **encryptées** (WPA2/3) et ne peuvent pas être déchiffrées
-- Les appareils modernes utilisent des **adresses MAC aléatoires** (MAC randomization) — le tracking MAC réel est limité
+- Les appareils modernes utilisent des **adresses MAC aléatoires** (MAC randomization) - le tracking MAC réel est limité
 - Les canaux 12/13 peuvent être restreints selon la réglementation locale
 
 ### BLE Scanner
 
-- La **distance estimée** est une approximation — précision de ±30% en conditions réelles
+- La **distance estimée** est une approximation - précision de ±30% en conditions réelles
 - Les appareils utilisant la **privacy BLE** (adresse MAC aléatoire rotative) apparaissent comme plusieurs appareils différents
-- Le scan passif ne capture que les **Advertisement Packets non sollicités** — certains appareils nécessitent un scan actif
+- Le scan passif ne capture que les **Advertisement Packets non sollicités** - certains appareils nécessitent un scan actif
 
 ---
 
